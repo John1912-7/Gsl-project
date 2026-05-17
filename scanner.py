@@ -1,6 +1,7 @@
 import re
 import pandas as pd
 from models import Status
+from session import append_to_session
 
 CODE_PATTERN = re.compile(r"^\d{12}$")
 
@@ -102,6 +103,7 @@ def interactive_scanning_mode(df: pd.DataFrame, csv_path: str) -> list:
         result = scan_ticket(code, df)
         print_result(result)
         session_history.append(result)
+        append_to_session(result)
 
     # Save updated statuses back to CSV
     df.to_csv(csv_path, index=False)
